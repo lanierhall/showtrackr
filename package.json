@@ -1,6 +1,9 @@
 {
   "name": "showtrackr",
   "version": "0.0.1",
+  "engines": {
+      "node": "0.10.29"
+  },
   "private": true,
   "scripts": {
     "start": "node server.js"
