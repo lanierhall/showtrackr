@@ -142,7 +142,7 @@ agenda.on('complete', function (job) {
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
-app.use(compress())
+app.use(compress());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());

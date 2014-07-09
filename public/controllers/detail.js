@@ -22,6 +22,9 @@
             };
 
             $scope.nextEpisode = show.episodes.filter(function (episode) {
+                console.log("now: " + new Date());
+                console.log("Airing: " + episode.firstAired);
+                console.log("Air Date: " + new Date(episode.firstAired));
                 return new Date(episode.firstAired) > new Date();
             })[0];
         });
