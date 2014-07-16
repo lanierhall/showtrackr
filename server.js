@@ -107,6 +107,7 @@ agenda.define('send email alert', function (job, done) {
         var upcomingEpisode = show.episodes.filter(function (episode) {
             return new Date(episode.firstAired) > new Date();
         })[0];
+        upcomingEpisode = upcomingEpisode || show.episodes[show.episodes.length - 1];
 
         var smtpTransport = nodemailer.createTransport('SMTP', {
             service: 'SendGrid',
@@ -122,7 +123,7 @@ agenda.define('send email alert', function (job, done) {
         };
 
         smtpTransport.sendMail(mailOptions, function (error, response) {
-            console.log('Message sent: ' + response.message);
+            console.log('Message sent: ' + (response ? response.message:""));
             smtpTransport.close();
             done();
         });
@@ -317,6 +318,6 @@ app.get('*', function (req, res) {
 
 app.use(function (err, req, res, next) {
     console.error(err.stack);
-    res.send(500, { message: err.message });
+    res.send(500, { message: err ? err.message : "" });
 });
 

@@ -4,6 +4,7 @@
         Show.get({ _id: $routeParams.id }, function (show) {
             $scope.show = show;
 
+
             $scope.isSubscribed = function () {
                 return $scope.show.subscribers.indexOf($rootScope.currentUser._id) !== -1;
             };
@@ -20,12 +21,28 @@
                     $scope.show.subscribers.splice(index, 1);
                 });
             };
+            function parseHour(airTime) {
+                var addHours = airTime.charAt(airTime.length - 2) == 'P' ? 12 : 0;
+                var endIndex = airTime.charAt(1) == ':' ? 1 : 2;
+                var hour = airTime.substring(0, endIndex);
+                return addHours + parseInt(hour);
+            }
+            $scope.getAirDateTime = function (episode, airTime) {
+                var hourNumber = parseHour(airTime);
+                var air = moment.utc(episode.firstAired);
+                air.hour(hourNumber);
+                air.add(300, 'minutes');//Eastern Time
+                return air
+            }
+
+            //Initialize each episode's airDateTime
+            for (var i = 0; i < show.episodes.length; i++) {
+                show.episodes[i].airDateTime = $scope.getAirDateTime(show.episodes[i], show.airsTime);
+            }
 
             $scope.nextEpisode = show.episodes.filter(function (episode) {
-                console.log("now: " + new Date());
-                console.log("Airing: " + episode.firstAired);
-                console.log("Air Date: " + new Date(episode.firstAired));
-                return new Date(episode.firstAired) > new Date();
+                return episode.airDateTime.format() > moment().format();
             })[0];
+            console.log($scope.nextEpisode.airDateTime);
         });
     }]);

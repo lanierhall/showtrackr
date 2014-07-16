@@ -40,7 +40,7 @@
     </div>
 
     <div class="alert alert-info" ng-show="nextEpisode">
-        The next episode starts {{nextEpisode.firstAired | fromNow}}.
+        The next episode starts {{nextEpisode.airDateTime | fromNow}}.
     </div>
 
     <div class="panel panel-default">
@@ -55,7 +55,7 @@
                 </h4>
                 <p>
                     <span class="glyphicon glyphicon-calendar"></span>
-                    {{episode.firstAired | date: 'short'}}
+                    {{episode.airDateTime.format() | date: 'short'}}
                 </p>
                 <p>{{episode.overview}}</p>
             </div>

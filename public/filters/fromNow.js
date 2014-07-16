@@ -1,6 +1,7 @@
 ﻿angular.module('MyApp').
   filter('fromNow', function () {
-      return function (date) {
-          return moment(date).fromNow();
-      }
-  });
+      return function (airDateTime) {
+          console.log(airDateTime);
+          return moment(airDateTime).fromNow();
+        }
+    });
